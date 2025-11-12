@@ -47,8 +47,6 @@ vim.fn["ddc#custom#patch_global"]("autoCompleteEvents", { "InsertEnter", "TextCh
 
 vim.fn["ddc#custom#patch_global"]("sourceOptions", {
   _ = {
-    dup = "keep",
-    ignoreCase = true,
     matchers = { "matcher_fuzzy" },
     sorters = { "sorter_fuzzy" },
     converters = { "converter_fuzzy" },
@@ -58,6 +56,8 @@ vim.fn["ddc#custom#patch_global"]("sourceOptions", {
   },
   lsp = {
     mark = "[LSP]",
+    ignoreCase = true,
+    dup = "keep",
     isVolatile = true,
     forceCompletionPattern = [[\.\w*|:\w*|->\w*]],
   },
@@ -113,6 +113,9 @@ repo = "Shougo/ddc-source-lsp"
 [[plugins]]
 repo = "Shougo/ddu.vim"
 lua_source = '''
+vim.fn["ddu#custom#patch_global"]("filer", {
+  ui = "file",
+})
 '''
 
 [[plugins]]
