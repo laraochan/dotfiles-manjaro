@@ -17,10 +17,10 @@ repo = 'Shougo/dpp-ext-toml'
 repo = 'Shougo/dpp-protocol-git'
 
 [[plugins]]
-repo = "maxmx03/solarized.nvim"
+repo = "craftzdog/solarized-osaka.nvim"
 lua_add = '''
 vim.o.background = "dark"
-vim.cmd.colorscheme("solarized")
+vim.cmd.colorscheme("solarized-osaka")
 '''
 
 [[plugins]]
@@ -122,7 +122,7 @@ vim.fn["ddu#custom#patch_global"]("filer", {
 repo = "Shougo/ddu-kind-file"
 
 [[plugins]]
-repo = "Shougo/dd-column-filename"
+repo = "Shougo/ddu-column-filename"
 
 [[plugins]]
 repo = "Shougo/ddu-source-file"
