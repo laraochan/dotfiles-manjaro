@@ -1,0 +1,125 @@
+[[plugins]]
+repo = 'Shougo/dpp.vim'
+
+[[plugins]]
+repo = 'Shougo/dpp-ext-installer'
+
+[[plugins]]
+repo = 'Shougo/dpp-ext-local'
+
+[[plugins]]
+repo = 'Shougo/dpp-ext-lazy'
+
+[[plugins]]
+repo = 'Shougo/dpp-ext-toml'
+
+[[plugins]]
+repo = 'Shougo/dpp-protocol-git'
+
+[[plugins]]
+repo = "maxmx03/solarized.nvim"
+lua_add = '''
+vim.o.background = "dark"
+vim.cmd.colorscheme("solarized")
+'''
+
+[[plugins]]
+repo = "nvim-treesitter/nvim-treesitter"
+hook_post_update = "TSUpdate"
+lua_source = '''
+require("nvim-treesitter.configs").setup({
+  ensure_installed = { "lua", "vim", "vimdoc", "toml", "javascript", "typescript", "tsx" },
+  highlight = {
+    enable = true,
+  },
+})
+'''
+
+[[plugins]]
+repo = "Shougo/ddc.vim"
+lua_source = '''
+vim.fn["ddc#custom#patch_global"]("ui", "pum")
+vim.fn["ddc#custom#patch_global"]("sources", { "around", "lsp" })
+
+vim.fn["ddc#custom#patch_global"]("autoCompleteDelay", 100)
+vim.fn["ddc#custom#patch_global"]("autoCompleteEvents", { "InsertEnter", "TextChangedI" })
+
+
+vim.fn["ddc#custom#patch_global"]("sourceOptions", {
+  _ = {
+    dup = "keep",
+    ignoreCase = true,
+    matchers = { "matcher_fuzzy" },
+    sorters = { "sorter_fuzzy" },
+    converters = { "converter_fuzzy" },
+  },
+  around = {
+    mark = "[AROUND]",
+  },
+  lsp = {
+    mark = "[LSP]",
+    isVolatile = true,
+    forceCompletionPattern = [[\.\w*|:\w*|->\w*]],
+  },
+})
+vim.fn["ddc#custom#patch_global"]("sourceParams", {
+  lsp = {
+    lspEngine = "nvim-lsp",
+    enableResolveItem = true,
+    enableAdditionalTextEdit = true,
+  }
+})
+vim.fn["ddc#custom#patch_global"]("filterParams", {
+  converter_fuzzy = {
+    hlGroup = "IncSearch",
+  }
+})
+vim.fn["ddc#enable"]()
+'''
+
+[[plugins]]
+repo = "Shougo/pum.vim"
+hook_source = '''
+inoremap <C-n>   <Cmd>call pum#map#insert_relative(+1)<CR>
+inoremap <C-p>   <Cmd>call pum#map#insert_relative(-1)<CR>
+inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+inoremap <PageDown> <Cmd>call pum#map#insert_relative_page(+1)<CR>
+inoremap <PageUp>   <Cmd>call pum#map#insert_relative_page(-1)<CR>
+'''
+
+[[plugins]]
+repo = "Shougo/ddc-ui-pum"
+
+[[plugins]]
+repo = "tani/ddc-fuzzy"
+
+[[plugins]]
+repo = "Shougo/ddc-source-around"
+
+[[plugins]]
+repo = "neovim/nvim-lspconfig"
+depends = ["ddc-source-lsp"]
+lua_add = '''
+vim.lsp.config("*", {
+  capabilities = require("ddc_source_lsp").make_client_capabilities(),
+})
+vim.lsp.enable("vtsls")
+'''
+
+[[plugins]]
+repo = "Shougo/ddc-source-lsp"
+
+[[plugins]]
+repo = "Shougo/ddu.vim"
+lua_source = '''
+'''
+
+[[plugins]]
+repo = "Shougo/ddu-kind-file"
+
+[[plugins]]
+repo = "Shougo/dd-column-filename"
+
+[[plugins]]
+repo = "Shougo/ddu-source-file"
