@@ -111,12 +111,90 @@ vim.lsp.enable("vtsls")
 repo = "Shougo/ddc-source-lsp"
 
 [[plugins]]
+repo = "matsui54/denops-popup-preview.vim"
+lua_source = '''
+vim.fn["popup_preview#enable"]()
+'''
+
+[[plugins]]
+repo = "matsui54/denops-signature_help"
+lua_source = '''
+vim.g.signature_help_config = {
+    contentsStyle = "full",
+    viewStyle = "floating",
+}
+vim.fn["signature_help#enable"]()
+'''
+
+[[plugins]]
 repo = "Shougo/ddu.vim"
 lua_source = '''
-vim.fn["ddu#custom#patch_global"]("filer", {
-  ui = "file",
+vim.fn["ddu#custom#patch_local"]("filer", {
+  ui = "filer",
+  sources = { { name = "file", params = {} } },
+  sourceOptions = {
+    _ = {
+      columns = {"filename"},
+      converters = {"converter_devicon"}
+    },
+  },
+  kindOptions = {
+    file = {
+      defaultAction = "open",
+    },
+  },
+  uiParams = {
+    filer = {
+      split = "floating",
+    },
+  },
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "ddu-filer",
+  callback = function()
+    vim.keymap.set("n", "l", function()
+      local item = vim.fn["ddu#ui#get_item"]()
+      if item and item.isTree then
+        return "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'narrow'})<CR>"
+      else
+        return "<Cmd>call ddu#ui#do_action('itemAction')<CR>"
+      end
+    end, { buffer = true, silent = true, expr = true })
+    vim.keymap.set("n", "h", "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'narrow', 'params': {'path': '..'}})<Cr>", { buffer = true, silent = true })
+    vim.keymap.set("n", "c", "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'newFile'})<Cr>", { buffer = true })
+    vim.keymap.set("n", "r", "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'rename'})<Cr>", { buffer = true })
+    vim.keymap.set("n", "d", "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'delete'})<Cr>", { buffer = true })
+    vim.keymap.set("n", ".", function()
+      local current = vim.fn["ddu#custom#get_current"](vim.b.ddu_ui_name)
+      local matchers = current.sourceOptions and current.sourceOptions._ and current.sourceOptions._.matchers or {}
+      local new_matchers
+
+      if vim.tbl_isempty(matchers) then
+        new_matchers = { "matcher_hidden" }
+      else
+        new_matchers = {}
+      end
+
+      vim.fn["ddu#custom#patch_local"](vim.b.ddu_ui_name, {
+        sourceOptions = {
+          _ = {
+            matchers = new_matchers,
+          },
+        },
+      })
+
+      vim.fn["ddu#ui#do_action"]("redraw")
+    end, { buffer = true })
+    vim.keymap.set("n", "q", "<Cmd>call ddu#ui#do_action('quit')<Cr>", { buffer = true, silent = true })
+  end
+})
+
+vim.keymap.set("n", "<Leader>e", "<Cmd>call ddu#start({ 'name': 'filer' })<Cr>")
 '''
+
+[[plugins]]
+repo = "Shougo/ddu-ui-filer"
 
 [[plugins]]
 repo = "Shougo/ddu-kind-file"
@@ -126,3 +204,10 @@ repo = "Shougo/ddu-column-filename"
 
 [[plugins]]
 repo = "Shougo/ddu-source-file"
+
+[[plugins]]
+repo = "uga-rosa/ddu-filter-converter_devicon"
+
+[[plugins]]
+repo = "Shougo/ddu-filter-matcher_hidden"
+
