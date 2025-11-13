@@ -1,20 +1,29 @@
 [[plugins]]
-repo = 'Shougo/dpp.vim'
+repo = "vim-denops/denops.vim"
 
 [[plugins]]
-repo = 'Shougo/dpp-ext-installer'
+repo = "vim-denops/denops-helloworld.vim"
 
 [[plugins]]
-repo = 'Shougo/dpp-ext-local'
+repo = "vim-denops/denops-shared-server.vim"
 
 [[plugins]]
-repo = 'Shougo/dpp-ext-lazy'
+repo = "Shougo/dpp.vim"
 
 [[plugins]]
-repo = 'Shougo/dpp-ext-toml'
+repo = "Shougo/dpp-ext-installer"
 
 [[plugins]]
-repo = 'Shougo/dpp-protocol-git'
+repo = "Shougo/dpp-ext-local"
+
+[[plugins]]
+repo = "Shougo/dpp-ext-lazy"
+
+[[plugins]]
+repo = "Shougo/dpp-ext-toml"
+
+[[plugins]]
+repo = "Shougo/dpp-protocol-git"
 
 [[plugins]]
 repo = "craftzdog/solarized-osaka.nvim"
@@ -191,10 +200,46 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.keymap.set("n", "<Leader>e", "<Cmd>call ddu#start({ 'name': 'filer' })<Cr>")
+
+vim.fn["ddu#custom#patch_local"]("buffer", {
+  ui = "ff",
+  sources = { { name = "buffer" } },
+  sourceParams = {
+    _ = {
+      orderby = "desc"
+    }
+  },
+  kindOptions = {
+    file = {
+      defaultAction = "open",
+    },
+  },
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "ddu-ff",
+  callback = function()
+    vim.keymap.set("n", "l", function()
+      local item = vim.fn["ddu#ui#get_item"]()
+      if item and item.isTree then
+        return "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'narrow'})<CR>"
+      else
+        return "<Cmd>call ddu#ui#do_action('itemAction')<CR>"
+      end
+    end, { buffer = true, silent = true, expr = true })
+    vim.keymap.set("n", "d", "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'delete'})<Cr>", { buffer = true })
+    vim.keymap.set("n", "q", "<Cmd>call ddu#ui#do_action('quit')<Cr>", { buffer = true, silent = true })
+  end
+})
+
+vim.keymap.set("n", "<Leader>fb", "<Cmd>call ddu#start({ 'name': 'buffer' })<Cr>")
 '''
 
 [[plugins]]
 repo = "Shougo/ddu-ui-filer"
+
+[[plugins]]
+repo = "Shougo/ddu-ui-ff"
 
 [[plugins]]
 repo = "Shougo/ddu-kind-file"
@@ -204,6 +249,9 @@ repo = "Shougo/ddu-column-filename"
 
 [[plugins]]
 repo = "Shougo/ddu-source-file"
+
+[[plugins]]
+repo = "shun/ddu-source-buffer"
 
 [[plugins]]
 repo = "uga-rosa/ddu-filter-converter_devicon"
