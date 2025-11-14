@@ -300,6 +300,11 @@ call ddu#custom#patch_local('buffer_diagnostics', {
   \   'lsp': {
   \     'defaultAction': 'open',
   \   },
+  \ },
+  \ 'uiParams': {
+  \   'ff': {
+  \     'ignoreEmpty': v:true,
+  \   },
   \ }})
 
 call ddu#custom#patch_local('global_diagnostics', {
@@ -315,6 +320,11 @@ call ddu#custom#patch_local('global_diagnostics', {
   \ 'kindOptions': {
   \   'lsp': {
   \     'defaultAction': 'open',
+  \   },
+  \ },
+  \ 'uiParams': {
+  \   'ff': {
+  \     'ignoreEmpty': v:true,
   \   },
   \ }})
 '''
@@ -339,8 +349,6 @@ repo = "shun/ddu-source-buffer"
 
 [[plugins]]
 repo = "uga-rosa/ddu-source-lsp"
-
-# TODO: add ddu.vim diagnostics
 
 [[plugins]]
 repo = "uga-rosa/ddu-filter-converter_devicon"
