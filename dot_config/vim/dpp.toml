@@ -1,0 +1,229 @@
+[[plugins]]
+repo = "vim-denops/denops.vim"
+
+[[plugins]]
+repo = "vim-denops/denops-helloworld.vim"
+
+[[plugins]]
+repo = "Shougo/dpp.vim"
+
+[[plugins]]
+repo = "Shougo/dpp-ext-installer"
+
+[[plugins]]
+repo = "Shougo/dpp-ext-local"
+
+[[plugins]]
+repo = "Shougo/dpp-ext-lazy"
+
+[[plugins]]
+repo = "Shougo/dpp-ext-toml"
+
+[[plugins]]
+repo = "Shougo/dpp-protocol-git"
+
+[[plugins]]
+repo = "catppuccin/vim"
+hook_add = '''
+colorscheme catppuccin_macchiato
+'''
+
+[[plugins]]
+repo = "Shougo/ddc.vim"
+hook_source = '''
+call ddc#custom#patch_global('ui', 'pum')
+call ddc#custom#patch_global('sources', ['around', 'lsp'])
+
+call ddc#custom#patch_global('autoCompleteDelay', 100)
+call ddc#custom#patch_global('autoCompleteEvents', ['InsertEnter', 'TextChangedI'])
+
+call ddc#custom#patch_global('sourceOptions', {
+  \ '_': {
+  \   'matchers': ['matcher_fuzzy'],
+  \   'sorters': ['sorter_fuzzy'],
+  \   'converters': ['converter_fuzzy'],
+  \ },
+  \ 'around': {
+  \   'mark': '[AROUND]',
+  \ },
+  \ 'lsp': {
+  \   'mark': '[LSP]',
+  \   'ignoreCase': v:true,
+  \   'dup': 'keep',
+  \   'isVolatile': v:true,
+  \   'forceCompletionPattern': '\.\w*|:\w*|->\w*',
+  \ }})
+
+call ddc#custom#patch_global('sourceParams', {
+  \ 'lsp': {
+  \   'lspEngine': 'vim-lsp',
+  \   'enableResolveItem': v:true,
+  \   'enableAdditionalTextEdit': v:true,
+  \ }})
+
+call ddc#custom#patch_global('filterParams', {
+  \ 'converter_fuzzy': {
+  \   'hlGroup': 'IncSearch',
+  \ }})
+
+call ddc#enable()
+'''
+
+[[plugins]]
+repo = "Shougo/pum.vim"
+hook_source = '''
+inoremap <C-n>   <Cmd>call pum#map#insert_relative(+1)<CR>
+inoremap <C-p>   <Cmd>call pum#map#insert_relative(-1)<CR>
+inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+inoremap <PageDown> <Cmd>call pum#map#insert_relative_page(+1)<CR>
+inoremap <PageUp>   <Cmd>call pum#map#insert_relative_page(-1)<CR>
+'''
+
+[[plugins]]
+repo = "Shougo/ddc-ui-pum"
+
+[[plugins]]
+repo = "tani/ddc-fuzzy"
+
+[[plugins]]
+repo = "Shougo/ddc-source-around"
+
+[[plugins]]
+repo = "prabirshrestha/vim-lsp"
+hook_add = '''
+let g:lsp_auto_enable = 0
+
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> gs <plug>(lsp-document-symbol-search)
+  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+  nmap <buffer> gr <plug>(lsp-references)
+  nmap <buffer> gi <plug>(lsp-implementation)
+  nmap <buffer> gt <plug>(lsp-type-definition)
+  nmap <buffer> <leader>rn <plug>(lsp-rename)
+  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+  nmap <buffer> K <plug>(lsp-hover)
+  nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+  nnoremap <buffer> <expr><c-b> lsp#scroll(-4)
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+'''
+
+[[plugins]]
+repo = "Shougo/ddc-source-lsp"
+
+[[plugins]]
+repo = "matsui54/denops-popup-preview.vim"
+hook_source = '''
+call popup_preview#enable()
+'''
+
+[[plugins]]
+repo = "matsui54/denops-signature_help"
+hook_source = '''
+let g:signature_help_config = {
+  \ 'contentsStyle': 'full',
+  \ 'viewStyle': 'floating',
+  \ }
+let g:lsp_signature_help_enabled = 0
+call signature_help#enable()
+'''
+
+[[plugins]]
+repo = "Shougo/ddu.vim"
+hook_add = '''
+call ddu#custom#patch_local('filer', {
+  \ 'ui': 'filer',
+  \ 'sources': [{'name': 'file'}],
+  \ 'sourceOptions': {
+  \   '_': {
+  \     'columns': ['filename'],
+  \     'converters': ['converter_devicon'],
+  \   },
+  \ },
+  \ 'kindOptions': {
+  \   'file': {
+  \     'defaultAction': 'open',
+  \   },
+  \ },
+  \ 'uiParams': {
+  \   'filer': {
+  \     'split': 'no',
+  \   }
+  \ }})
+
+autocmd FileType ddu-filer call s:ddu_filer_setting()
+
+function! s:ddu_filer_setting() abort
+  nnoremap <buffer><silent><expr> l
+    \ ddu#ui#get_item()->get('isTree', v:false) ?
+    \ "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'narrow'})<Cr>" :
+    \ "<Cmd>call ddu#ui#do_action('itemAction')<Cr>"
+  nnoremap <buffer><silent> h <Cmd>call ddu#ui#do_action('itemAction', {'name': 'narrow', 'params': {'path': '..'}})<CR>
+  nnoremap <buffer><silent> c <Cmd>call ddu#ui#do_action('itemAction', {'name': 'newFile'})<CR>
+  nnoremap <buffer><silent> r <Cmd>call ddu#ui#do_action('itemAction', {'name': 'rename'})<CR>
+  nnoremap <buffer><silent> d <Cmd>call ddu#ui#do_action('itemAction', {'name': 'delete'})<CR>
+  nnoremap <buffer><silent> q <Cmd>call ddu#ui#do_action('quit')<CR>
+endfunction
+
+nnoremap <Leader>e <Cmd>call ddu#start({'name': 'filer'})<Cr>
+
+call ddu#custom#patch_local('buffer', {
+  \ 'ui': 'ff',
+  \ 'sources': [{'name': 'buffer'}],
+  \ 'sourceParams': {
+  \   '_': {
+  \     'orderby': 'desc',
+  \   },
+  \ },
+  \ 'kindOptions': {
+  \   'file': {
+  \     'defaultAction': 'open',
+  \   },
+  \ }})
+
+autocmd FileType ddu-ff call s:ddu_ff_setting()
+
+function! s:ddu_ff_setting() abort
+  nnoremap <buffer><silent> l <Cmd>call ddu#ui#do_action('itemAction')<Cr>
+  nnoremap <buffer><silent> d <Cmd>call ddu#ui#do_action('itemAction', {'name': 'delete'})<CR>
+  nnoremap <buffer><silent> q <Cmd>call ddu#ui#do_action('quit')<CR>
+endfunction
+
+nnoremap <Leader>fb <Cmd>call ddu#start({'name': 'buffer'})<Cr>
+'''
+
+[[plugins]]
+repo = "Shougo/ddu-ui-filer"
+
+[[plugins]]
+repo = "Shougo/ddu-ui-ff"
+
+[[plugins]]
+repo = "Shougo/ddu-kind-file"
+
+[[plugins]]
+repo = "Shougo/ddu-column-filename"
+
+[[plugins]]
+repo = "Shougo/ddu-source-file"
+
+[[plugins]]
+repo = "shun/ddu-source-buffer"
+
+[[plugins]]
+repo = "uga-rosa/ddu-filter-converter_devicon"
+
+[[plugins]]
+repo = "Shougo/ddu-filter-matcher_hidden"
+
+
