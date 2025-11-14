@@ -69,6 +69,9 @@ set nowrap
 set cursorline
 set signcolumn=yes
 
-nnoremap bx <Cmd>bd<Cr>
+nnoremap bd <Cmd>bd<Cr>
 nnoremap bn <Cmd>bn<Cr>
 nnoremap bp <Cmd>bp<Cr>
+
+" 一時的にvim configに不満があったらすぐにメモできるように一時的に設定
+nnoremap <Leader>m <Cmd>e ~/.config/vim/memo.md<Cr>
