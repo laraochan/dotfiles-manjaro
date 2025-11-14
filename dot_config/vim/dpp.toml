@@ -92,7 +92,13 @@ repo = "Shougo/ddc-source-around"
 [[plugins]]
 repo = "prabirshrestha/vim-lsp"
 hook_add = '''
-let g:lsp_auto_enable = 0
+if executable('vtsls')
+  autocmd User lsp_setup call lsp#register_server({
+    \ 'name': 'vtsls',
+    \ 'cmd': {server_info->['vtsls', '--stdio']},
+    \ 'allowlist': ['javascript', 'javascriptreact', 'typescript', 'typescriptreact'],
+    \ })
+endif
 
 function! s:on_lsp_buffer_enabled() abort
   setlocal omnifunc=lsp#complete
