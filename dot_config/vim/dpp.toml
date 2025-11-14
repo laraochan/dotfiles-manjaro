@@ -103,16 +103,17 @@ endif
 function! s:on_lsp_buffer_enabled() abort
   setlocal omnifunc=lsp#complete
   if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-  nmap <buffer> gd <plug>(lsp-definition)
-  nmap <buffer> gs <plug>(lsp-document-symbol-search)
-  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-  nmap <buffer> gr <plug>(lsp-references)
-  nmap <buffer> gi <plug>(lsp-implementation)
-  nmap <buffer> gt <plug>(lsp-type-definition)
-  nmap <buffer> <leader>rn <plug>(lsp-rename)
-  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-  nmap <buffer> K <plug>(lsp-hover)
+  nnoremap <buffer> <Leader>gd <Cmd>call ddu#start({'name': 'lsp_definition'})<Cr>
+  nnoremap <buffer> <Leader>gD <Cmd>call ddu#start({'name': 'lsp_typeDefinition'})<Cr>
+  nnoremap <buffer> <Leader>gr <Cmd>call ddu#start({'name': 'lsp_references'})<Cr>
+  nnoremap <buffer> <Leader>gi <Cmd>call ddu#start({'name': 'lsp_implementation'})<Cr>
+  nnoremap <buffer> <Leader>ca <Cmd>call ddu#start({'name': 'lsp_codeAction'})<Cr>
+  nnoremap <buffer> <Leader>xx <Cmd>call ddu#start({'name': 'buffer_diagnostics'})<Cr>
+  nnoremap <buffer> <Leader>xg <Cmd>call ddu#start({'name': 'global_diagnostics'})<Cr>
+  nnoremap <buffer> <leader>rn <plug>(lsp-rename)
+  nnoremap <buffer> [g <plug>(lsp-previous-diagnostic)
+  nnoremap <buffer> ]g <plug>(lsp-next-diagnostic)
+  nnoremap <buffer> K <plug>(lsp-hover)
   nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
   nnoremap <buffer> <expr><c-b> lsp#scroll(-4)
 endfunction
@@ -206,6 +207,116 @@ function! s:ddu_ff_setting() abort
 endfunction
 
 nnoremap <Leader>fb <Cmd>call ddu#start({'name': 'buffer'})<Cr>
+
+call ddu#custom#patch_local('lsp_definition', {
+  \ 'sync': v:true,
+  \ 'ui': 'ff',
+  \ 'sources': [{'name': 'lsp_definition'}],
+  \ 'sourceParams': {
+  \   'lsp_definition': {
+  \     'clientName': 'vim-lsp',
+  \     'method': 'textDocument/definition',
+  \   },
+  \ },
+  \ 'kindOptions': {
+  \   'lsp': {
+  \     'defaultAction': 'open',
+  \   },
+  \ }})
+
+call ddu#custom#patch_local('lsp_typeDefinition', {
+  \ 'sync': v:true,
+  \ 'ui': 'ff',
+  \ 'sources': [{'name': 'lsp_definition'}],
+  \ 'sourceParams': {
+  \   'lsp_definition': {
+  \     'clientName': 'vim-lsp',
+  \     'method': 'textDocument/typeDefinition',
+  \   },
+  \ },
+  \ 'kindOptions': {
+  \   'lsp': {
+  \     'defaultAction': 'open',
+  \   },
+  \ }})
+
+call ddu#custom#patch_local('lsp_implementation', {
+  \ 'sync': v:true,
+  \ 'ui': 'ff',
+  \ 'sources': [{'name': 'lsp_definition'}],
+  \ 'sourceParams': {
+  \   'lsp_definition': {
+  \     'clientName': 'vim-lsp',
+  \     'method': 'textDocument/implementation',
+  \   },
+  \ },
+  \ 'kindOptions': {
+  \   'lsp': {
+  \     'defaultAction': 'open',
+  \   },
+  \ }})
+
+call ddu#custom#patch_local('lsp_references', {
+  \ 'sync': v:true,
+  \ 'ui': 'ff',
+  \ 'sources': [{'name': 'lsp_references'}],
+  \ 'sourceParams': {
+  \   'lsp_references': {
+  \     'clientName': 'vim-lsp',
+  \   },
+  \ },
+  \ 'kindOptions': {
+  \   'lsp': {
+  \     'defaultAction': 'open',
+  \   },
+  \ }})
+
+call ddu#custom#patch_local('lsp_codeAction', {
+  \ 'sync': v:true,
+  \ 'ui': 'ff',
+  \ 'sources': [{'name': 'lsp_codeAction'}],
+  \ 'sourceParams': {
+  \   'lsp_codeAction': {
+  \     'clientName': 'vim-lsp',
+  \   },
+  \ },
+  \ 'kindOptions': {
+  \   'lsp_codeAction': {
+  \     'defaultAction': 'apply',
+  \   },
+  \ }})
+
+call ddu#custom#patch_local('buffer_diagnostics', {
+  \ 'sync': v:true,
+  \ 'ui': 'ff',
+  \ 'sources': [{'name': 'lsp_diagnostic'}],
+  \ 'sourceParams': {
+  \   'lsp_diagnostic': {
+  \     'clientName': 'vim-lsp',
+  \     'buffer': 0,
+  \   },
+  \ },
+  \ 'kindOptions': {
+  \   'lsp': {
+  \     'defaultAction': 'open',
+  \   },
+  \ }})
+
+call ddu#custom#patch_local('global_diagnostics', {
+  \ 'sync': v:true,
+  \ 'ui': 'ff',
+  \ 'sources': [{'name': 'lsp_diagnostic'}],
+  \ 'sourceParams': {
+  \   'lsp_diagnostic': {
+  \     'clientName': 'vim-lsp',
+  \     'buffer': v:null,
+  \   },
+  \ },
+  \ 'kindOptions': {
+  \   'lsp': {
+  \     'defaultAction': 'open',
+  \   },
+  \ }})
 '''
 
 [[plugins]]
@@ -227,9 +338,13 @@ repo = "Shougo/ddu-source-file"
 repo = "shun/ddu-source-buffer"
 
 [[plugins]]
+repo = "uga-rosa/ddu-source-lsp"
+
+# TODO: add ddu.vim diagnostics
+
+[[plugins]]
 repo = "uga-rosa/ddu-filter-converter_devicon"
 
 [[plugins]]
 repo = "Shougo/ddu-filter-matcher_hidden"
-
 
