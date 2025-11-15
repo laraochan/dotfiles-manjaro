@@ -149,14 +149,13 @@ call signature_help#enable()
 repo = "Shougo/ddu.vim"
 hook_add = '''
 call ddu#custom#patch_local('filer', {
-  \ 'sync': v:true,
   \ 'ui': 'filer',
   \ 'sources': [{'name': 'file'}],
   \ 'sourceOptions': {
   \   '_': {
   \     'ignoreCase': v:true,
   \     'columns': ['filename'],
-  \     'matchers': ['matcher_substring', 'matcher_hidden'],
+  \     'matchers': ['matcher_substring'],
   \     'converters': ['converter_devicon'],
   \   },
   \ },
@@ -171,12 +170,24 @@ call ddu#custom#patch_local('filer', {
   \     'sort': 'filename',
   \     'sortTreesFirst': v:true,
   \     'previewSplit': 'vertical',
-  \     'startAutoAction': v:true,
-  \     'autoAction': {
-  \       'name': 'preview',
-  \     },
   \   },
   \ }})
+
+call ddu#custom#patch_local('test_file', {
+  \ 'ui': 'filer',
+  \ 'sources': [{'name': 'file', 'params': {}}],
+  \ 'sourceOptions': {
+  \   '_': {
+  \     'columns': ['filename'],
+  \     'matchers': ['matcher_hidden'],
+  \   },
+  \ },
+  \ 'kindOptions': {
+  \   'file': {
+  \     'defaultAction': 'open',
+  \   },
+  \ }})
+nnoremap <Leader>t <Cmd>call ddu#start({'name': 'test_file'})<Cr>
 
 autocmd FileType ddu-filer call s:ddu_filer_setting()
 
@@ -191,6 +202,7 @@ function! s:ddu_filer_setting() abort
   nnoremap <buffer><silent> d <Cmd>call ddu#ui#do_action('itemAction', {'name': 'delete'})<CR>
   nnoremap <buffer><silent> q <Cmd>call ddu#ui#do_action('quit')<CR>
   nnoremap <buffer><silent> / <Cmd>call ddu#ui#do_action('openFilterWindow')<Cr>
+  nnoremap <buffer><silent> p <Cmd>call ddu#ui#do_action('togglePreview')<Cr>
   nnoremap <buffer> .
     \ <Cmd>call ddu#ui#do_action('updateOptions', {
     \   'sourceOptions': {
@@ -215,7 +227,6 @@ endfunction
 nnoremap <Leader>e <Cmd>call ddu#start({'name': 'filer'})<Cr>
 
 call ddu#custom#patch_local('buffer', {
-  \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'buffer'}],
   \ 'sourceOptions': {
@@ -236,6 +247,7 @@ call ddu#custom#patch_local('buffer', {
   \ },
   \ 'uiParams': {
   \   'ff': {
+  \     'split': 'no',
   \     'previewSplit': 'vertical',
   \   },
   \ }})
@@ -255,7 +267,6 @@ endfunction
 nnoremap <Leader>fb <Cmd>call ddu#start({'name': 'buffer'})<Cr>
 
 call ddu#custom#patch_local('lsp_definition', {
-  \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_definition'}],
   \ 'sourceOptions': {
@@ -287,7 +298,6 @@ call ddu#custom#patch_local('lsp_definition', {
   \ }})
 
 call ddu#custom#patch_local('lsp_typeDefinition', {
-  \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_definition'}],
   \ 'sourceOptions': {
@@ -319,7 +329,6 @@ call ddu#custom#patch_local('lsp_typeDefinition', {
   \ }})
 
 call ddu#custom#patch_local('lsp_implementation', {
-  \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_definition'}],
   \ 'sourceOptions': {
@@ -351,7 +360,6 @@ call ddu#custom#patch_local('lsp_implementation', {
   \ }})
 
 call ddu#custom#patch_local('lsp_references', {
-  \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_references'}],
   \ 'sourceOptions': {
@@ -382,7 +390,6 @@ call ddu#custom#patch_local('lsp_references', {
   \ }})
 
 call ddu#custom#patch_local('lsp_codeAction', {
-  \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_codeAction'}],
   \ 'sourceOptions': {
@@ -409,7 +416,6 @@ call ddu#custom#patch_local('lsp_codeAction', {
   \ }})
 
 call ddu#custom#patch_local('buffer_diagnostics', {
-  \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_diagnostic'}],
   \ 'sourceParams': {
@@ -439,7 +445,6 @@ call ddu#custom#patch_local('buffer_diagnostics', {
   \ }})
 
 call ddu#custom#patch_local('global_diagnostics', {
-  \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_diagnostic'}],
   \ 'sourceParams': {
@@ -485,6 +490,7 @@ call ddu#custom#patch_local('help', {
   \ 'uiParams': {
   \   'ff': {
   \     'ignoreEmpty': v:true,
+  \     'split': 'no',
   \     'previewSplit': 'vertial',
   \   },
   \ }})
@@ -513,6 +519,7 @@ call ddu#custom#patch_local('fzf', {
   \ 'uiParams': {
   \   'ff': {
   \     'ignoreEmpty': v:true,
+  \     'split': 'no',
   \     'previewSplit': 'vertical',
   \     'startAutoAction': v:true,
   \     'autoAction': {
