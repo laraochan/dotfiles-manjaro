@@ -149,11 +149,14 @@ call signature_help#enable()
 repo = "Shougo/ddu.vim"
 hook_add = '''
 call ddu#custom#patch_local('filer', {
+  \ 'sync': v:true,
   \ 'ui': 'filer',
   \ 'sources': [{'name': 'file'}],
   \ 'sourceOptions': {
   \   '_': {
+  \     'ignoreCase': v:true,
   \     'columns': ['filename'],
+  \     'matchers': ['matcher_substring', 'matcher_hidden'],
   \     'converters': ['converter_devicon'],
   \   },
   \ },
@@ -165,7 +168,14 @@ call ddu#custom#patch_local('filer', {
   \ 'uiParams': {
   \   'filer': {
   \     'split': 'no',
-  \   }
+  \     'sort': 'filename',
+  \     'sortTreesFirst': v:true,
+  \     'previewSplit': 'vertical',
+  \     'startAutoAction': v:true,
+  \     'autoAction': {
+  \       'name': 'preview',
+  \     },
+  \   },
   \ }})
 
 autocmd FileType ddu-filer call s:ddu_filer_setting()
@@ -180,13 +190,40 @@ function! s:ddu_filer_setting() abort
   nnoremap <buffer><silent> r <Cmd>call ddu#ui#do_action('itemAction', {'name': 'rename'})<CR>
   nnoremap <buffer><silent> d <Cmd>call ddu#ui#do_action('itemAction', {'name': 'delete'})<CR>
   nnoremap <buffer><silent> q <Cmd>call ddu#ui#do_action('quit')<CR>
+  nnoremap <buffer><silent> / <Cmd>call ddu#ui#do_action('openFilterWindow')<Cr>
+  nnoremap <buffer> .
+    \ <Cmd>call ddu#ui#do_action('updateOptions', {
+    \   'sourceOptions': {
+    \     '_': {
+    \       'matchers': ToggleHidden(),
+    \     },
+    \   },
+    \ })<Cr>
+    \ <Cmd> call ddu#ui#do_action('redraw')<Cr>
+endfunction
+
+function ToggleHidden()
+  const current = ddu#custom#get_current(b:ddu_ui_name)
+  const source_options = get(current, 'sourceOptions', {})
+  const source_options_all = get(source_options, '_', {})
+  const matchers = get(source_options_all, 'matchers', [])
+  return index(matchers, 'matcher_hidden') >= 0
+    \ ? filter(copy(matchers), {_, v -> v != 'matcher_hidden'})
+    \ : add(copy(matchers), 'matcher_hidden')
 endfunction
 
 nnoremap <Leader>e <Cmd>call ddu#start({'name': 'filer'})<Cr>
 
 call ddu#custom#patch_local('buffer', {
+  \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'buffer'}],
+  \ 'sourceOptions': {
+  \   '_': {
+  \     'ignoreCase': v:true,
+  \     'matchers': ['matcher_substring'],
+  \   },
+  \ },
   \ 'sourceParams': {
   \   '_': {
   \     'orderby': 'desc',
@@ -196,14 +233,23 @@ call ddu#custom#patch_local('buffer', {
   \   'file': {
   \     'defaultAction': 'open',
   \   },
+  \ },
+  \ 'uiParams': {
+  \   'ff': {
+  \     'previewSplit': 'vertical',
+  \   },
   \ }})
 
 autocmd FileType ddu-ff call s:ddu_ff_setting()
 
 function! s:ddu_ff_setting() abort
   nnoremap <buffer><silent> l <Cmd>call ddu#ui#do_action('itemAction')<Cr>
-  nnoremap <buffer><silent> d <Cmd>call ddu#ui#do_action('itemAction', {'name': 'delete'})<CR>
   nnoremap <buffer><silent> q <Cmd>call ddu#ui#do_action('quit')<CR>
+  nnoremap <buffer><silent> / <Cmd>call ddu#ui#do_action('openFilterWindow')<Cr>
+
+  if b:ddu_ui_name == 'buffer'
+    nnoremap <buffer><silent> d <Cmd>call ddu#ui#do_action('itemAction', {'name': 'delete'})<CR>
+  endif
 endfunction
 
 nnoremap <Leader>fb <Cmd>call ddu#start({'name': 'buffer'})<Cr>
@@ -212,6 +258,12 @@ call ddu#custom#patch_local('lsp_definition', {
   \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_definition'}],
+  \ 'sourceOptions': {
+  \   '_': {
+  \     'ignoreCase': v:true,
+  \     'matchers': ['matcher_substring'],
+  \   },
+  \ },
   \ 'sourceParams': {
   \   'lsp_definition': {
   \     'clientName': 'vim-lsp',
@@ -222,12 +274,28 @@ call ddu#custom#patch_local('lsp_definition', {
   \   'lsp': {
   \     'defaultAction': 'open',
   \   },
+  \ },
+  \ 'uiParams': {
+  \   'ff': {
+  \     'ignoreEmpty': v:true,
+  \     'previewSplit': 'vertical',
+  \     'startAutoAction': v:true,
+  \     'autoAction': {
+  \       'name': 'preview',
+  \     },
+  \   },
   \ }})
 
 call ddu#custom#patch_local('lsp_typeDefinition', {
   \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_definition'}],
+  \ 'sourceOptions': {
+  \   '_': {
+  \     'ignoreCase': v:true,
+  \     'matchers': ['matcher_substring'],
+  \   },
+  \ },
   \ 'sourceParams': {
   \   'lsp_definition': {
   \     'clientName': 'vim-lsp',
@@ -238,12 +306,28 @@ call ddu#custom#patch_local('lsp_typeDefinition', {
   \   'lsp': {
   \     'defaultAction': 'open',
   \   },
+  \ },
+  \ 'uiParams': {
+  \   'ff': {
+  \     'ignoreEmpty': v:true,
+  \     'previewSplit': 'vertical',
+  \     'startAutoAction': v:true,
+  \     'autoAction': {
+  \       'name': 'preview',
+  \     },
+  \   },
   \ }})
 
 call ddu#custom#patch_local('lsp_implementation', {
   \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_definition'}],
+  \ 'sourceOptions': {
+  \   '_': {
+  \     'ignoreCase': v:true,
+  \     'matchers': ['matcher_substring'],
+  \   },
+  \ },
   \ 'sourceParams': {
   \   'lsp_definition': {
   \     'clientName': 'vim-lsp',
@@ -254,12 +338,28 @@ call ddu#custom#patch_local('lsp_implementation', {
   \   'lsp': {
   \     'defaultAction': 'open',
   \   },
+  \ },
+  \ 'uiParams': {
+  \   'ff': {
+  \     'ignoreEmpty': v:true,
+  \     'previewSplit': 'vertical',
+  \     'startAutoAction': v:true,
+  \     'autoAction': {
+  \       'name': 'preview',
+  \     },
+  \   },
   \ }})
 
 call ddu#custom#patch_local('lsp_references', {
   \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_references'}],
+  \ 'sourceOptions': {
+  \   '_': {
+  \     'ignoreCase': v:true,
+  \     'matchers': ['matcher_substring'],
+  \   },
+  \ },
   \ 'sourceParams': {
   \   'lsp_references': {
   \     'clientName': 'vim-lsp',
@@ -269,12 +369,28 @@ call ddu#custom#patch_local('lsp_references', {
   \   'lsp': {
   \     'defaultAction': 'open',
   \   },
+  \ },
+  \ 'uiParams': {
+  \   'ff': {
+  \     'ignoreEmpty': v:true,
+  \     'previewSplit': 'vertical',
+  \     'startAutoAction': v:true,
+  \     'autoAction': {
+  \       'name': 'preview',
+  \     },
+  \   },
   \ }})
 
 call ddu#custom#patch_local('lsp_codeAction', {
   \ 'sync': v:true,
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_codeAction'}],
+  \ 'sourceOptions': {
+  \   '_': {
+  \     'ignoreCase': v:true,
+  \     'matchers': ['matcher_substring'],
+  \   },
+  \ },
   \ 'sourceParams': {
   \   'lsp_codeAction': {
   \     'clientName': 'vim-lsp',
@@ -284,6 +400,12 @@ call ddu#custom#patch_local('lsp_codeAction', {
   \   'lsp_codeAction': {
   \     'defaultAction': 'apply',
   \   },
+  \ },
+  \ 'uiParams': {
+  \   'ff': {
+  \     'ignoreEmpty': v:true,
+  \     'previewSplit': 'vertical',
+  \   },
   \ }})
 
 call ddu#custom#patch_local('buffer_diagnostics', {
@@ -291,6 +413,10 @@ call ddu#custom#patch_local('buffer_diagnostics', {
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_diagnostic'}],
   \ 'sourceParams': {
+  \   '_': {
+  \     'ignoreCase': v:true,
+  \     'matchers': ['matcher_substring'],
+  \   },
   \   'lsp_diagnostic': {
   \     'clientName': 'vim-lsp',
   \     'buffer': 0,
@@ -304,6 +430,11 @@ call ddu#custom#patch_local('buffer_diagnostics', {
   \ 'uiParams': {
   \   'ff': {
   \     'ignoreEmpty': v:true,
+  \     'previewSplit': 'vertical',
+  \     'startAutoAction': v:true,
+  \     'autoAction': {
+  \       'name': 'preview',
+  \     },
   \   },
   \ }})
 
@@ -312,6 +443,10 @@ call ddu#custom#patch_local('global_diagnostics', {
   \ 'ui': 'ff',
   \ 'sources': [{'name': 'lsp_diagnostic'}],
   \ 'sourceParams': {
+  \   '_': {
+  \     'ignoreCase': v:true,
+  \     'matchers': ['matcher_substring'],
+  \   },
   \   'lsp_diagnostic': {
   \     'clientName': 'vim-lsp',
   \     'buffer': v:null,
@@ -325,8 +460,68 @@ call ddu#custom#patch_local('global_diagnostics', {
   \ 'uiParams': {
   \   'ff': {
   \     'ignoreEmpty': v:true,
+  \     'previewSplit': 'vertical',
+  \     'startAutoAction': v:true,
+  \     'autoAction': {
+  \       'name': 'preview',
+  \     },
   \   },
   \ }})
+
+call ddu#custom#patch_local('help', {
+  \ 'ui': 'ff',
+  \ 'sources': [{'name': 'help'}],
+  \ 'sourceOptions': {
+  \   '_': {
+  \     'ignoreCase': v:true,
+  \     'matchers': ['matcher_substring'],
+  \   },
+  \ },
+  \ 'kindOptions': {
+  \   'help': {
+  \     'defaultAction': 'open',
+  \   },
+  \ },
+  \ 'uiParams': {
+  \   'ff': {
+  \     'ignoreEmpty': v:true,
+  \     'previewSplit': 'vertial',
+  \   },
+  \ }})
+
+nnoremap <Leader>fh <Cmd>call ddu#start({'name': 'help'})<Cr>
+
+call ddu#custom#patch_local('fzf', {
+  \ 'ui': 'ff',
+  \ 'sources': [{'name': 'file_rec'}],
+  \ 'sourceOptions': {
+  \   '_': {
+  \     'ignoreCase': v:true,
+  \     'matchers': ['matcher_substring'],
+  \   },
+  \ },
+  \ 'sourceParams': {
+  \   'file_rec': {
+  \     'ignoredDirectories': ['.git', 'node_modules'],
+  \   },
+  \ },
+  \ 'kindOptions': {
+  \   'file': {
+  \     'defaultAction': 'open',
+  \   },
+  \ },
+  \ 'uiParams': {
+  \   'ff': {
+  \     'ignoreEmpty': v:true,
+  \     'previewSplit': 'vertical',
+  \     'startAutoAction': v:true,
+  \     'autoAction': {
+  \       'name': 'preview',
+  \     },
+  \   },
+  \ }})
+
+nnoremap <Leader>ff <Cmd>call ddu#start({'name': 'fzf'})<Cr>
 '''
 
 [[plugins]]
@@ -349,6 +544,15 @@ repo = "shun/ddu-source-buffer"
 
 [[plugins]]
 repo = "uga-rosa/ddu-source-lsp"
+
+[[plugins]]
+repo = "matsui54/ddu-source-help"
+
+[[plugins]]
+repo = "Shougo/ddu-source-file_rec"
+
+[[plugins]]
+repo = "Shougo/ddu-filter-matcher_substring"
 
 [[plugins]]
 repo = "uga-rosa/ddu-filter-converter_devicon"
