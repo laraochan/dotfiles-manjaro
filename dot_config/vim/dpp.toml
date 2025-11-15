@@ -203,6 +203,7 @@ function! s:ddu_filer_setting() abort
   nnoremap <buffer><silent> q <Cmd>call ddu#ui#do_action('quit')<CR>
   nnoremap <buffer><silent> / <Cmd>call ddu#ui#do_action('openFilterWindow')<Cr>
   nnoremap <buffer><silent> p <Cmd>call ddu#ui#do_action('togglePreview')<Cr>
+  " TODO: なんか思ったように動かん
   nnoremap <buffer> .
     \ <Cmd>call ddu#ui#do_action('updateOptions', {
     \   'sourceOptions': {
@@ -249,6 +250,10 @@ call ddu#custom#patch_local('buffer', {
   \   'ff': {
   \     'split': 'no',
   \     'previewSplit': 'vertical',
+  \     'startAutoAction': v:true,
+  \     'autoAction': {
+  \       'name': 'preview',
+  \     },
   \   },
   \ }})
 
@@ -504,6 +509,7 @@ call ddu#custom#patch_local('fzf', {
   \   '_': {
   \     'ignoreCase': v:true,
   \     'matchers': ['matcher_substring'],
+  \     'converters': ['converter_devicon'],
   \   },
   \ },
   \ 'sourceParams': {
