@@ -1,5 +1,4 @@
 vim.g.mapleader = " "
-vim.g.denops_server_addr = "127.0.0.1:32123"
 
 local denopsSrc = "~/.cache/dpp/repos/github.com/vim-denops/denops.vim"
 local denopsHello = "~/.cache/dpp/repos/github.com/vim-denops/denops-helloworld.vim"
@@ -93,3 +92,5 @@ vim.diagnostic.config({
 vim.keymap.set("n", "<Leader>dd", vim.diagnostic.open_float, { desc = "show diagnostic" })
 vim.keymap.set("n", "<Leader>dn", vim.diagnostic.goto_next, { desc = "goto next diagnostic" })
 vim.keymap.set("n", "<Leader>dp", vim.diagnostic.goto_prev, { desc = "goto prev diagnostic" })
+
+vim.opt.runtimepath:append("~/Documents/ghq/github.com/laraochan/denops-getting-started")

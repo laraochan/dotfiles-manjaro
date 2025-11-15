@@ -5,9 +5,6 @@ repo = "vim-denops/denops.vim"
 repo = "vim-denops/denops-helloworld.vim"
 
 [[plugins]]
-repo = "vim-denops/denops-shared-server.vim"
-
-[[plugins]]
 repo = "Shougo/dpp.vim"
 
 [[plugins]]
@@ -25,11 +22,17 @@ repo = "Shougo/dpp-ext-toml"
 [[plugins]]
 repo = "Shougo/dpp-protocol-git"
 
+# [[plugins]]
+# repo = "craftzdog/solarized-osaka.nvim"
+# lua_add = '''
+# vim.o.background = "dark"
+# vim.cmd.colorscheme("solarized-osaka")
+# '''
+
 [[plugins]]
-repo = "craftzdog/solarized-osaka.nvim"
+repo = "catppuccin/nvim"
 lua_add = '''
-vim.o.background = "dark"
-vim.cmd.colorscheme("solarized-osaka")
+vim.cmd.colorscheme("catppuccin-macchiato")
 '''
 
 [[plugins]]

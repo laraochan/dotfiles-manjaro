@@ -14,8 +14,10 @@
 
 - [x] 補完 ddc.vim
 - [ ] filer ddu.vim
+    - [ ] 順序がバラバラなのでちゃんとできるようにする
     - [ ] hiddenの挙動がおかしいのでそこだけ修正したい
 - [ ] fzf ddu.vim
+- [ ] lspのUIの補助 ddu.vim
 
 # 疑問
 
