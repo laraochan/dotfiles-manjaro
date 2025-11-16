@@ -140,102 +140,56 @@ vim.fn["signature_help#enable"]()
 
 [[plugins]]
 repo = "Shougo/ddu.vim"
-lua_source = '''
-vim.fn["ddu#custom#patch_local"]("filer", {
-  ui = "filer",
-  sources = { { name = "file", params = {} } },
-  sourceOptions = {
-    _ = {
-      columns = {"filename"},
-      converters = {"converter_devicon"}
-    },
-  },
-  kindOptions = {
-    file = {
-      defaultAction = "open",
-    },
-  },
-  uiParams = {
-    filer = {
-      split = "floating",
-    },
-  },
-})
+hook_source = '''
+call ddu#custom#patch_global({
+    \   'sync': v:true,
+    \   'ui': 'filer',
+    \   'sources': [{'name': 'file', 'params': {}}],
+    \   'sourceOptions': {
+    \     '_': {
+    \       'columns': ['filename'],
+    \     },
+    \   },
+    \   'kindOptions': {
+    \     'file': {
+    \       'defaultAction': 'open',
+    \     },
+    \   }
+    \ })
+autocmd FileType ddu-filer call s:ddu_my_settings()
+function! s:ddu_my_settings() abort
+  nnoremap <buffer><silent> <CR>
+        \ <Cmd>call ddu#ui#do_action('itemAction')<CR>
+  nnoremap <buffer><silent> <Space>
+        \ <Cmd>call ddu#ui#do_action('toggleSelectItem')<CR>
+  nnoremap <buffer> o
+        \ <Cmd>call ddu#ui#do_action('expandItem',
+        \ {'mode': 'toggle'})<CR>
+  nnoremap <buffer><silent> q
+        \ <Cmd>call ddu#ui#do_action('quit')<CR>
+  nnoremap <buffer> .
+	\ <Cmd>call ddu#ui#do_action('updateOptions', #{
+	\   sourceOptions: #{
+	\     _: #{
+	\       matchers: ToggleHidden(),
+	\     },
+	\   },
+	\ })<CR>
+	\<Cmd>call ddu#ui#do_action('redraw')<CR>
+	
+	function ToggleHidden()
+	  const current = ddu#custom#get_current(b:ddu_ui_name)
+	  const source_options = get(current, 'sourceOptions', {})
+	  const source_options_all = get(source_options, '_', {})
+	  const matchers = get(source_options_all, 'matchers', [])
+	  return empty(matchers) ? ['matcher_hidden'] : []
+	endfunction
+endfunction
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "ddu-filer",
-  callback = function()
-    vim.keymap.set("n", "l", function()
-      local item = vim.fn["ddu#ui#get_item"]()
-      if item and item.isTree then
-        return "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'narrow'})<CR>"
-      else
-        return "<Cmd>call ddu#ui#do_action('itemAction')<CR>"
-      end
-    end, { buffer = true, silent = true, expr = true })
-    vim.keymap.set("n", "h", "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'narrow', 'params': {'path': '..'}})<Cr>", { buffer = true, silent = true })
-    vim.keymap.set("n", "c", "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'newFile'})<Cr>", { buffer = true })
-    vim.keymap.set("n", "r", "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'rename'})<Cr>", { buffer = true })
-    vim.keymap.set("n", "d", "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'delete'})<Cr>", { buffer = true })
-    vim.keymap.set("n", ".", function()
-      local current = vim.fn["ddu#custom#get_current"](vim.b.ddu_ui_name)
-      local matchers = current.sourceOptions and current.sourceOptions._ and current.sourceOptions._.matchers or {}
-      local new_matchers
+nnoremap <Leader>e <Cmd>call ddu#start()<Cr>
 
-      if vim.tbl_isempty(matchers) then
-        new_matchers = { "matcher_hidden" }
-      else
-        new_matchers = {}
-      end
-
-      vim.fn["ddu#custom#patch_local"](vim.b.ddu_ui_name, {
-        sourceOptions = {
-          _ = {
-            matchers = new_matchers,
-          },
-        },
-      })
-
-      vim.fn["ddu#ui#do_action"]("redraw")
-    end, { buffer = true })
-    vim.keymap.set("n", "q", "<Cmd>call ddu#ui#do_action('quit')<Cr>", { buffer = true, silent = true })
-  end
-})
-
-vim.keymap.set("n", "<Leader>e", "<Cmd>call ddu#start({ 'name': 'filer' })<Cr>")
-
-vim.fn["ddu#custom#patch_local"]("buffer", {
-  ui = "ff",
-  sources = { { name = "buffer" } },
-  sourceParams = {
-    _ = {
-      orderby = "desc"
-    }
-  },
-  kindOptions = {
-    file = {
-      defaultAction = "open",
-    },
-  },
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "ddu-ff",
-  callback = function()
-    vim.keymap.set("n", "l", function()
-      local item = vim.fn["ddu#ui#get_item"]()
-      if item and item.isTree then
-        return "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'narrow'})<CR>"
-      else
-        return "<Cmd>call ddu#ui#do_action('itemAction')<CR>"
-      end
-    end, { buffer = true, silent = true, expr = true })
-    vim.keymap.set("n", "d", "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'delete'})<Cr>", { buffer = true })
-    vim.keymap.set("n", "q", "<Cmd>call ddu#ui#do_action('quit')<Cr>", { buffer = true, silent = true })
-  end
-})
-
-vim.keymap.set("n", "<Leader>fb", "<Cmd>call ddu#start({ 'name': 'buffer' })<Cr>")
+autocmd TabEnter,WinEnter,CursorHold,FocusGained *
+    \ call ddu#ui#do_action('checkItems')
 '''
 
 [[plugins]]
