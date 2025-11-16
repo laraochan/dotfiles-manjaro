@@ -75,3 +75,8 @@ nnoremap bp <Cmd>bp<Cr>
 
 " 一時的にvim configに不満があったらすぐにメモできるように一時的に設定
 nnoremap <Leader>m <Cmd>e ~/.config/vim/memo.md<Cr>
+
+" Vim側の組み込みプラグインを無効化
+let s:save_rtp = &runtimepath
+set rtp-=$VIMRUNTIME
+autocmd SourcePre */plugin/* ++once let &runtimepath = s:save_rtp
