@@ -1,0 +1,134 @@
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.021  000.021: --- VIM STARTING ---
+000.183  000.162: locale set
+000.188  000.005: window checked
+000.809  000.621: inits 1
+000.859  000.050: parsing arguments
+000.860  000.001: expanding arguments
+000.895  000.035: shell init
+001.380  000.485: Termcap init
+001.392  000.012: inits 2
+001.499  000.107: init highlight
+002.009  000.361  000.361: sourcing /usr/share/vim/vimfiles/archlinux.vim
+002.060  000.516  000.155: sourcing /etc/vimrc
+002.571  000.076  000.076: sourcing /home/larao/.cache/dpp/repos/github.com/Shougo/dpp.vim/autoload/dpp/min.vim
+004.858  001.352  001.352: sourcing /usr/share/vim/vim91/colors/lists/default.vim
+008.379  003.336  003.336: sourcing /home/larao/.cache/dpp/vim/.dpp/colors/catppuccin_macchiato.vim
+008.702  000.147  000.147: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/ddu/custom.vim
+008.974  000.121  000.121: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/ddu/denops.vim
+011.157  000.141  000.141: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/ddc/custom.vim
+011.400  000.106  000.106: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/ddc/denops.vim
+012.098  000.112  000.112: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/ddc.vim
+012.374  000.017  000.017: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/denops/_internal/conf.vim
+012.408  000.219  000.202: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/denops/plugin.vim
+012.731  000.242  000.242: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/denops/_internal/plugin.vim
+013.094  000.060  000.060: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/popup_preview.vim
+013.312  000.061  000.061: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/signature_help.vim
+013.510  000.061  000.061: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/ddt/custom.vim
+013.774  000.109  000.109: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/ddt/denops.vim
+013.938  010.548  004.481: sourcing /home/larao/.cache/dpp/vim/startup.vim
+014.352  000.141  000.141: sourcing /usr/share/vim/vim91/colors/lists/default.vim
+014.956  000.236  000.236: sourcing /usr/share/vim/vim91/syntax/syncolor.vim
+018.023  003.502  003.266: sourcing /home/larao/.cache/dpp/vim/.dpp/colors/catppuccin_macchiato.vim
+018.148  004.040  000.397: sourcing /usr/share/vim/vim91/syntax/synload.vim
+031.379  000.042  000.042: sourcing /usr/share/vim/vimfiles/ftdetect/ghostty.vim
+031.661  013.434  013.392: sourcing /usr/share/vim/vim91/filetype.vim
+033.349  000.628  000.628: sourcing /usr/share/vim/vim91/autoload/dist/script.vim
+034.999  002.442  001.814: sourcing /usr/share/vim/vim91/scripts.vim
+035.308  021.294  001.378: sourcing /usr/share/vim/vim91/syntax/syntax.vim
+035.455  000.030  000.030: sourcing /usr/share/vim/vim91/filetype.vim
+036.436  000.740  000.740: sourcing /home/larao/.cache/dpp/vim/.dpp/ftplugin.vim
+036.525  000.027  000.027: sourcing /usr/share/vim/vim91/ftplugin.vim
+036.776  000.076  000.076: sourcing /usr/share/vim/vim91/indent.vim
+037.447  035.305  002.514: sourcing ~/.config/vim/vimrc
+037.457  000.137: sourcing vimrc file(s)
+039.416  001.701  001.701: sourcing /usr/share/vim/vimfiles/plugin/fzf.vim
+040.109  000.209  000.209: sourcing /home/larao/.cache/dpp/vim/.dpp/plugin/ddc_source_lsp.vim
+040.380  000.229  000.229: sourcing /home/larao/.cache/dpp/vim/.dpp/plugin/denops/debug.vim
+040.622  000.184  000.184: sourcing /home/larao/.cache/dpp/vim/.dpp/plugin/denops-helloworld.vim
+040.927  000.118  000.118: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/denops.vim
+041.219  000.542  000.424: sourcing /home/larao/.cache/dpp/vim/.dpp/plugin/denops.vim
+042.698  000.923  000.923: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/utils.vim
+043.999  002.739  001.816: sourcing /home/larao/.cache/dpp/vim/.dpp/plugin/lsp.vim
+044.142  000.087  000.087: sourcing /home/larao/.cache/dpp/vim/.dpp/plugin/skkeleton.vim
+044.857  000.184  000.184: sourcing /usr/share/vim/vim91/plugin/colorresp.vim
+044.987  000.096  000.096: sourcing /usr/share/vim/vim91/plugin/getscriptPlugin.vim
+045.433  000.379  000.379: sourcing /usr/share/vim/vim91/plugin/gzip.vim
+045.771  000.305  000.305: sourcing /usr/share/vim/vim91/plugin/logiPat.vim
+045.860  000.055  000.055: sourcing /usr/share/vim/vim91/plugin/manpager.vim
+046.175  000.284  000.284: sourcing /usr/share/vim/vim91/plugin/matchparen.vim
+047.197  000.572  000.572: sourcing /usr/share/vim/vim91/pack/dist/opt/netrw/plugin/netrwPlugin.vim
+047.257  001.048  000.476: sourcing /usr/share/vim/vim91/plugin/netrwPlugin.vim
+047.494  000.188  000.188: sourcing /usr/share/vim/vim91/plugin/openPlugin.vim
+047.589  000.054  000.054: sourcing /usr/share/vim/vim91/plugin/rrhelper.vim
+047.660  000.034  000.034: sourcing /usr/share/vim/vim91/plugin/spellfile.vim
+047.959  000.265  000.265: sourcing /usr/share/vim/vim91/plugin/tarPlugin.vim
+048.205  000.195  000.195: sourcing /usr/share/vim/vim91/plugin/tohtml.vim
+048.269  000.028  000.028: sourcing /usr/share/vim/vim91/plugin/tutor.vim
+048.563  000.261  000.261: sourcing /usr/share/vim/vim91/plugin/vimballPlugin.vim
+048.921  000.292  000.292: sourcing /usr/share/vim/vim91/plugin/zipPlugin.vim
+049.215  000.016  000.016: sourcing /home/larao/.cache/dpp/repos/github.com/vim-denops/denops.vim/plugin/denops/debug.vim
+049.272  000.010  000.010: sourcing /home/larao/.cache/dpp/repos/github.com/vim-denops/denops.vim/plugin/denops.vim
+049.420  000.012  000.012: sourcing /home/larao/.cache/dpp/repos/github.com/vim-denops/denops-helloworld.vim/plugin/denops-helloworld.vim
+049.554  002.700: loading plugins
+049.625  000.071: loading packages
+049.650  000.025: loading after plugins
+049.656  000.006: inits 3
+050.030  000.374: reading viminfo
+050.053  000.023: setting raw mode
+050.063  000.010: start termcap
+050.082  000.019: clearing screen
+050.225  000.143: opening buffers
+050.262  000.037: BufEnter autocommands
+050.264  000.002: editing files in windows
+051.144  000.600  000.600: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/denops/server.vim
+051.631  000.349  000.349: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/denops/_internal/server/chan.vim
+051.923  000.059  000.059: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/denops/_internal/path.vim
+052.232  000.467  000.408: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/denops/_internal/server/proc.vim
+052.540  000.076  000.076: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/denops/_internal/echo.vim
+052.807  000.087  000.087: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/denops/_internal/job.vim
+054.023  000.040  000.040: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/denops/_internal/event.vim
+056.953  001.980  001.980: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/callbag.vim
+058.451  003.578  001.598: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp.vim
+059.016  000.226  000.226: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/ui/vim/completion.vim
+059.505  000.197  000.197: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/document_highlight.vim
+061.658  000.032  000.032: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/diagnostics.vim
+061.969  000.181  000.181: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/diagnostics/state.vim
+063.854  000.049  000.049: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/diagnostics/echo.vim
+064.169  000.207  000.207: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/diagnostics/highlights.vim
+064.375  000.026  000.026: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/textprop.vim
+066.601  000.523  000.523: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/vital/lsp.vim
+067.058  000.208  000.208: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/vital/_lsp/VS/Vim/Syntax/Markdown.vim
+067.213  000.031  000.031: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/vital/_lsp.vim
+067.616  000.120  000.120: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/vital/_lsp/VS/LSP/MarkupContent.vim
+067.975  000.088  000.088: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/vital/_lsp/VS/LSP/Text.vim
+068.788  000.479  000.479: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/vital/_lsp/VS/Vim/Window/FloatingWindow.vim
+069.360  000.235  000.235: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/vital/_lsp/VS/Vim/Window.vim
+069.982  000.190  000.190: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/vital/_lsp/VS/Vim/Buffer.vim
+070.220  004.251  002.377: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/diagnostics/float.vim
+070.724  000.376  000.376: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/ui/vim/output.vim
+071.099  000.237  000.237: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/diagnostics/signs.vim
+073.167  000.268  000.268: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/diagnostics/virtual_text.vim
+075.208  000.115  000.115: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/document_code_action/signs.vim
+077.225  000.405  000.405: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/semantic.vim
+077.414  000.055  000.055: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/show_message_request.vim
+078.295  000.076  000.076: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/show_message.vim
+078.915  000.067  000.067: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/work_done_progress.vim
+079.474  000.453  000.453: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/completion/documentation.vim
+081.052  000.116  000.116: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/internal/inlay_hints.vim
+083.044  000.437  000.437: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/lsp/client.vim
+084.859  021.624: VimEnter autocommands
+084.865  000.006: before starting main loop
+085.539  000.424  000.424: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/vital/signature_help.vim
+085.974  000.200  000.200: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/vital/_signature_help/VS/Vim/Buffer.vim
+086.133  000.032  000.032: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/vital/_signature_help.vim
+086.947  000.467  000.467: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/vital/_signature_help/VS/Vim/Window/FloatingWindow.vim
+087.533  000.232  000.232: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/vital/_signature_help/VS/Vim/Window.vim
+088.071  003.057  001.702: sourcing /home/larao/.cache/dpp/vim/.dpp/autoload/signature_help/doc.vim
+089.798  001.876: first screen update
+089.800  000.002: --- VIM STARTED ---
