@@ -1,9 +1,5 @@
 # 欲しい機能
-- ddu-source-lspのuiをリッチにしたい
-- ddc.vimでlspの補完で途中でforceCompletionPatternに当てはまっても補完候補が更新されない減少を調査
-- diagnosticsのuiもリッチにしたい
 - dpp.vimで自動で更新できるようにする
 - vim-skk/skkeleton気になる
-- vimでclipboard対応していないのでできればvimの中で完結したほうがいい
-    - ddt.vimを導入する
 - filerでhidden対応
+- ddc.vimでlspの補完で途中でforceCompletionPatternに当てはまっても補完候補が更新されない減少を調査
