@@ -605,3 +605,12 @@ augroup skkeleton-initialize-pre
 augroup END
 inoremap <C-j> <Plug>(skkeleton-toggle)
 '''
+
+[[plugins]]
+repo = "tpope/vim-commentary"
+
+[[plugins]]
+repo = "airblade/vim-gitgutter"
+hook = '''
+autocmd BufWritePost * GitGutter
+'''
