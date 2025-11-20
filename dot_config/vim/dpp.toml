@@ -637,14 +637,3 @@ hook_add = '''
 xnoremap <Leader>y :<C-u>Oscyank<CR>
 '''
 
-[[plugins]]
-repo = "vim-airline/vim-airline"
-hook_add = '''
-let g:airline_theme = 'sakura'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-'''
-
-[[plugins]]
-repo = "ryanoasis/vim-devicons"
-
