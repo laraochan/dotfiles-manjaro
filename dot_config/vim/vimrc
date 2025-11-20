@@ -36,6 +36,12 @@ autocmd User Dpp:makeStatePost
       \ | echomsg 'dpp make_state() is done'
       \ | echohl NONE
 
+command! DppInstall call dpp#async_ext_action('installer', 'install')
+command! -nargs=* DppUpdate call dpp#async_ext_action(
+  \ 'installer',
+  \ 'update',
+  \ {'names': split(<q-args>)})
+
 if has('syntax')
 	syntax on
 endif
@@ -72,9 +78,6 @@ set signcolumn=yes
 nnoremap bd <Cmd>bd<Cr>
 nnoremap bn <Cmd>bn<Cr>
 nnoremap bp <Cmd>bp<Cr>
-
-" 一時的にvim configに不満があったらすぐにメモできるように一時的に設定
-nnoremap <Leader>m <Cmd>e ~/.config/vim/memo.md<Cr>
 
 " Vim側の組み込みプラグインを無効化
 let s:save_rtp = &runtimepath
