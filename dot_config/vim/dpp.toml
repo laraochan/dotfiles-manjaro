@@ -23,12 +23,6 @@ repo = "Shougo/dpp-ext-toml"
 repo = "Shougo/dpp-protocol-git"
 
 [[plugins]]
-repo = "catppuccin/vim"
-hook_add = '''
-colorscheme catppuccin_macchiato
-'''
-
-[[plugins]]
 repo = "Shougo/ddc.vim"
 hook_source = '''
 call ddc#custom#patch_global('ui', 'pum')
@@ -613,4 +607,10 @@ repo = "tpope/vim-commentary"
 repo = "airblade/vim-gitgutter"
 hook = '''
 autocmd BufWritePost * GitGutter
+'''
+
+[[plugins]]
+repo = "laraochan/sakura.vim"
+hook_add = '''
+colorscheme sakura
 '''
